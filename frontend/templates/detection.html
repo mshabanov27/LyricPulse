@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LyricPulse</title>
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/detection.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('frontend', path='static/favicon.ico') }}">
+</head>
+<body>
+<header class="standardHeader">
+    <div class="logo"><a href="/"
+                         style="color: black; text-decoration: none;">LyricPulse</a>
+    </div>
+    <img src="{{ url_for('frontend', path='static/profile.jpg') }}" alt="Profile Icon" class="profile-icon"
+         onclick="toggleMenu()">
+    <div class="profile-menu" id="profileMenu">
+        <ul>
+            <li><a class="menu-links" href="/profile/">Profile</a></li>
+            <li><a class="menu-links" href="/history/">History</a></li>
+            <li><a class="menu-links" href="mailto:mityashabanov2004@gmail.com">Support</a></li>
+            <li><a class="menu-links" href="#" id="logoutLink">Sign out</a></li>
+        </ul>
+    </div>
+</header>
+<main class="main-content">
+    <h1>You can...</h1>
+    <div class="action-buttons">
+        <button type="button" class="styledButton" id="recordButton" onclick="toggleRecording()">Record</button>
+        <span style="min-width: 150px;">or</span>
+        <input type="file" id="upload" accept=".mp3, .wav, .ogg" hidden/>
+        <label for="upload" class="styledButton">Upload</label>
+    </div>
+</main>
+<script src="{{ url_for('frontend', path='static/common.js') }}"></script>
+<script>
+    let mediaRecorder;
+    let audioChunks = [];
+    let isRecording = false;
+
+    async function toggleRecording() {
+        const recordButton = document.getElementById("recordButton")
+        if (!isRecording) {
+            audioChunks = [];
+            const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+            mediaRecorder.start();
+
+            recordButton.textContent = "Stop";
+            isRecording = true;
+
+            let timeoutStatus = setTimeout(async function () {
+                await stopRecording(mediaRecorder, recordButton);
+            }, 15000);
+        } else {
+            await stopRecording(mediaRecorder, recordButton)
+        }
+    }
+
+    async function stopRecording(mediaRecorder, recordButton) {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        recordButton.textContent = "Wait...";
+        recordButton.className = "styledButton"
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, {type: 'audio/wav'});
+            let file = new File([audioBlob], "audio.wav", {type: "audio/wav", lastModified: new Date().getTime()});
+
+            await sendAudioToBackend(file);
+            isRecording = false;
+        }
+    }
+
+    async function sendAudioToBackend(file) {
+        let container = new DataTransfer();
+        container.items.add(file);
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/recognition/';
+        form.enctype = 'multipart/form-data';
+
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.name = 'file';
+        fileInput.files = container.files;
+
+        form.appendChild(fileInput);
+        document.body.appendChild(form);
+
+        form.submit();
+    }
+
+    const uploadField = document.getElementById("upload");
+
+    uploadField.onchange = function () {
+        if (this.files[0].size > 20971520) {
+            alert("File is too big!");
+            this.value = "";
+        }
+
+        sendAudioToBackend(this.files[0])
+    }
+</script>
+</body>
+</html>

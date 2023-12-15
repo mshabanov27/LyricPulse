@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/sign-in.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('frontend', path='static/favicon.ico') }}">
+</head>
+<body>
+<div class="login-box" id="registrationBox">
+    <h1>LyricPulse</h1>
+    <form class="login-form" style="height: 80%" id="signup">
+        <div class="input-group">
+            <label for="username"></label>
+            <input type="text" placeholder="Username" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="password"></label>
+            <input type="password" placeholder="Password" id="password" name="password" required>
+        </div>
+        <div class="input-group">
+            <label for="repeatPassword"></label>
+            <input type="password" placeholder="Repeat password" id="repeatPassword" name="repeat_password" required>
+        </div>
+        <button type="submit" class="styledButton">Sign up</button>
+    </form>
+    <div class="noAccount">
+        Already have an account? <a href="/signIn/">Sign in</a>
+    </div>
+</div>
+
+<dialog>
+    <p style="font-size: 35px; font-weight: bold; padding-bottom: 20px;" id="errorDescription"></p>
+    <a class="black-button" onclick="closePopup()">Try Again</a>
+</dialog>
+
+<script src="{{ url_for('frontend', path='static/common.js') }}"></script>
+<script>
+    document.getElementById("signup").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (validateSignUp()) {
+            signUpUser();
+        }
+    });
+
+    function signUpUser() {
+        const formData = new FormData(document.getElementById("signup"));
+
+        fetch('/user/', {
+            method: 'POST',
+            body: formData
+        })
+            .then(handleResponse)
+            .then(() => {
+                loginUser(formData.get('username'), formData.get('password'));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showPopup(error.message);
+            });
+    }
+
+    function loginUser(username, password) {
+        const details = {
+            'username': username,
+            'password': password
+        };
+
+        let formBody = [];
+        for (let property in details) {
+            const encodedKey = encodeURIComponent(property);
+            const encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+
+        fetch('/token/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: formBody
+        })
+            .then(handleResponse)
+            .then(() => {
+                window.location.href = '/detection/';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showPopup(error.message);
+            });
+    }
+
+    function handleResponse(response) {
+        if (!response.ok) {
+            return response.text().then(text => {
+                const error = JSON.parse(text);
+                throw new Error(error.detail || response.statusText);
+            });
+        }
+        return response.json();
+    }
+
+    function validateSignUp() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const repeatPassword = document.getElementById("repeatPassword").value;
+
+        const usernameValid = validateUsername(username)
+        const passwordValid = validatePassword(password, repeatPassword)
+
+
+        return usernameValid && passwordValid;
+    }
+
+    function validateUsername(username) {
+        const regex = /^[A-Za-z0-9._]{4,30}$/;
+        if (!regex.test(username)) {
+
+            showPopup("Username does not match the following rules: \n" +
+                "<ul>\n" +
+                "  <li>Length should be from 4 to 30 symbols</li>\n" +
+                "  <li>Only letters, numbers, periods, and underscores</li>\n" +
+                "</ul>  ");
+
+            return false;
+        }
+        return true;
+    }
+
+    function validatePassword(password, repeatPassword) {
+        if (password !== repeatPassword) {
+            showPopup("Passwords don't match!");
+            return false;
+        } else if (!(/^(?=.*[A-Z])(?=.*\d).{8,16}$/.test(password))) {
+
+            showPopup("Password does not match the following rules: \n" +
+                "<ul>\n" +
+                "  <li>Length should be from 8 to 16 symbols</li>\n" +
+                "  <li>At least one uppercase character</li>\n" +
+                "  <li>At least one number</li>\n" +
+                "</ul>  ");
+
+            return false;
+        }
+        return true;
+    }
+
+    function showPopup(errorMessage) {
+        document.getElementById("errorDescription").innerHTML = errorMessage;
+        const dialog = document.querySelector("dialog");
+        document.getElementById("registrationBox").classList.add("blur-background");
+        dialog.showModal();
+    }
+
+    function closePopup() {
+        const dialog = document.querySelector("dialog");
+        document.getElementById("registrationBox").classList.remove("blur-background");
+        dialog.close();
+    }
+</script>
+</body>
+</html>

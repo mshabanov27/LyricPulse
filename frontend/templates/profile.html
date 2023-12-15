@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/profile.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('frontend', path='static/favicon.ico') }}">
+</head>
+<body>
+<header class="standardHeader">
+    <div class="logo"><a href="/"
+                         style="color: black; text-decoration: none;">LyricPulse</a>
+    </div>
+    <img src="{{ url_for('frontend', path='static/profile.jpg') }}" alt="Profile Icon" class="profile-icon"
+         onclick="toggleMenu()">
+    <div class="profile-menu" id="profileMenu">
+        <ul>
+            <li><a class="menu-links" href="/profile/">Profile</a></li>
+            <li><a class="menu-links" href="/history/">History</a></li>
+            <li><a class="menu-links" href="mailto:mityashabanov2004@gmail.com">Support</a></li>
+            <li><a class="menu-links" href="#" id="logoutLink">Sign out</a></li>
+        </ul>
+    </div>
+</header>
+
+<main class="settings" id="settings">
+
+    <div class="middle-section">
+        <a class="black-button" id="back-button" href="/detection/">◀ Back</a>
+
+        <div class="fields-section">
+            <div class="field-row">
+                <div class="field-label">Username:</div>
+                <form class="field" id="change_username">
+                    <label for="new_username"></label>
+                    <input type="text" placeholder="New Username" value={{username}} id="new_username"
+                           name="new_username" required>
+
+                    <button class="black-button" id="save-button">Save</button>
+                </form>
+            </div>
+
+            <div class="field-row">
+                <div class="field-label">Password:</div>
+                <a class="black-button" id="password_button" href="/password/">Change password</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="account-actions">
+        <button class="black-button" id="clear-button">Clear history</button>
+        <button class="black-button" id="delete-button">Delete account</button>
+    </div>
+</main>
+
+<dialog id="confirm-dialog">
+    <div style="display: flex; flex-direction: column; align-items: center">
+        <p style="font-size: 35px; font-weight: bold; padding-bottom: 20px;" id="confirmation"></p>
+        <div id="confirm_cancel" style="display: flex; gap: 30px">
+            <a class="black-button">Confirm</a>
+            <a class="styledButton" id="cancel" onclick="closePopup()">Cancel</a>
+        </div>
+    </div>
+</dialog>
+
+
+<dialog id="ok-dialog">
+    <div style="display: flex; flex-direction: column; align-items: center">
+        <p id="ok-message" style="font-size: 35px; font-weight: bold; padding-bottom: 20px;"></p>
+        <a class="styledButton" href="/profile/">OK</a>
+    </div>
+</dialog>
+
+
+<script src="{{ url_for('frontend', path='static/common.js') }}"></script>
+<script>
+
+    document.getElementById("save-button").addEventListener("click", function (event) {
+        const formData = new FormData(document.getElementById("change_username"));
+
+        event.preventDefault();
+        fetch('/username/', {
+            method: 'PUT',
+            body: formData
+        })
+            .then(handleResponse)
+            .then()
+            .catch(error => console.error('Error:', error));
+    });
+
+    function handleResponse(response, message) {
+        if (!response.ok) {
+            return response.json().then(data => {
+                showOk(data.detail);
+                throw new Error(data.detail || "An unknown error occurred");
+            });
+        }
+        showOk("Success!");
+        return response.json();
+    }
+
+    document.getElementById("clear-button").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        document.getElementById("confirm_cancel").children[0].id = "confirm_clear";
+
+        showPopup("Are you sure you want to clear your recognition history?");
+
+        document.getElementById("confirm_clear").addEventListener("click", function (event) {
+            closePopup();
+            fetch('/history/', {
+                method: 'DELETE'
+            })
+                .then(handleResponse)
+                .catch(error => console.error('Error:', error));
+        })
+    });
+
+    document.getElementById("delete-button").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        document.getElementById("confirm_cancel").children[0].id = "confirm_delete";
+
+        showPopup("Are you sure you want to delete your account?")
+
+        document.getElementById("confirm_delete").addEventListener("click", function (event) {
+            closePopup();
+            fetch('/user/', {
+                method: 'DELETE'
+            })
+                .then(handleResponse)
+                .catch(error => console.error('Error:', error));
+        })
+    });
+
+
+    function showPopup(message) {
+        document.getElementById("confirmation").innerHTML = message;
+        const dialog = document.getElementById("confirm-dialog");
+        document.getElementById("settings").classList.add("blur-background");
+        dialog.showModal();
+    }
+
+    function closePopup() {
+        const dialog = document.getElementById("confirm-dialog");
+        document.getElementById("settings").classList.remove("blur-background");
+        dialog.close();
+    }
+
+    function showOk(message){
+        document.getElementById("ok-message").innerHTML = message;
+        const dialog = document.getElementById("ok-dialog");
+        document.getElementById("settings").classList.add("blur-background");
+        dialog.showModal();
+    }
+
+</script>
+</body>
+</html>

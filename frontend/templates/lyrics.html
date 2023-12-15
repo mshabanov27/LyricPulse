@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LyricPulse</title>
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/lyrics.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('frontend', path='static/favicon.ico') }}">
+</head>
+<body>
+<header class="standardHeader">
+    <div class="logo"><a href="/"
+                         style="color: black; text-decoration: none;">LyricPulse</a>
+    </div>
+    <img src="{{ url_for('frontend', path='static/profile.jpg') }}" alt="Profile Icon" class="profile-icon"
+         onclick="toggleMenu()">
+    <div class="profile-menu" id="profileMenu">
+        <ul>
+            <li><a class="menu-links" href="/profile/">Profile</a></li>
+            <li><a class="menu-links" href="/history/">History</a></li>
+            <li><a class="menu-links" href="mailto:mityashabanov2004@gmail.com">Support</a></li>
+            <li><a class="menu-links" href="#" id="logoutLink">Sign out</a></li>
+        </ul>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="flex-container">
+        <div class="left-block">
+            <div class="song-info">
+                <img src={{album_cover}}
+                     alt="Album cover"
+                     class="album-cover">
+                <div style="display: flex; flex-direction: column; gap: 15px; align-self: center; max-width: 600px">
+                    <div id="name" class="name">{{name}}</div>
+                    <div id="artist" class="artist">{{artist}}</div>
+                </div>
+            </div>
+
+            <iframe width="760" height="400" class="video-container" src="https://www.youtube.com/embed/{{youtube_id}}"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="lyrics-box">
+            <div class="lyrics">
+                {{ lyrics|safe }}
+            </div>
+            <div class="right-margin-scroll"></div>
+        </div>
+    </div>
+
+    <a class="black-button" href="/detection/">Try Again?</a>
+
+    <dialog>
+        <p style="font-size: 35px; font-weight: bold; padding-bottom: 20px;">Song was not found!</p>
+        <a class="black-button" href="/detection/">Try Again</a>
+    </dialog>
+</main>
+
+<script src="{{ url_for('frontend', path='static/common.js') }}"></script>
+<script>
+    function checkIfNotFound() {
+        const nameElement = document.getElementById("name");
+        const artistElement = document.getElementById("artist");
+        const dialog = document.querySelector("dialog");
+
+        if (nameElement && artistElement && nameElement.textContent === "Not Found" && artistElement.textContent === "Not Found") {
+            document.body.querySelector("main").classList.add("blur-background");
+            dialog.showModal();
+        }
+    }
+
+    checkIfNotFound();
+</script>
+</body>
+</html>

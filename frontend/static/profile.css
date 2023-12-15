@@ -1,0 +1,203 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-around;
+    gap: 150px;
+}
+
+.middle-section{
+    display: flex;
+    justify-content: flex-start;
+    height: 100%;
+    margin: 80px 40px;
+}
+
+.fields-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50%;
+    width: 100%;
+    align-items: center;
+    gap: 50px;
+}
+
+.field-row{
+    display: flex;
+    width: 80%;
+    gap: 40px;
+}
+
+.field-label{
+    font-size: 2.5rem;
+    align-self: center;
+}
+
+.field{
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--light);
+    width: 100%;
+    padding: 10px;
+    border: 3px solid var(--dark);
+    border-radius: 20px;
+    min-width: 350px;
+    box-sizing: border-box;
+}
+
+.account-actions{
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+    width: 60%;
+    max-width: 1500px;
+    min-width: 800px;
+    margin-bottom: 50px;
+}
+
+#back-button{
+    font-size: 1.5rem;
+    align-self: flex-start;
+}
+
+#new_username{
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#save-button{
+    font-size: 1.5rem;
+    padding: 0.5rem 1.5rem;
+}
+
+#password_button{
+    font-size: 2rem;
+    padding: 1rem 2rem;
+}
+
+#clear-button:hover{
+    background-color: #FF5F15;
+}
+
+#delete-button:hover{
+    background-color: #C41E3A;
+}
+
+.styledButton{
+    font-size: 2.25rem;
+    border-radius: 40px;
+    padding: 1rem 4rem;
+    cursor: pointer;
+    transition: 0.35s;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+#confirm_clear{
+    color: black;
+    background-color: #FF5F15;
+}
+
+#confirm_clear:hover{
+    color: var(--light);
+    background-color: var(--dark);
+}
+
+#confirm_delete{
+    color: black;
+    background-color: #C41E3A;
+}
+
+#confirm_delete:hover{
+    color: var(--light);
+    background-color: var(--dark);
+}
+
+input:focus {
+    outline:none;
+}
+
+@media only screen and (max-width: 920px){
+    .middle-section{
+        flex-flow: wrap;
+    }
+
+    .fields-section {
+        align-items: flex-start;
+    }
+
+    .field-row{
+        width: 100%;
+    }
+
+    .account-actions{
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        width: 60%;
+        min-width: 200px;
+    }
+}
+
+@media only screen and (max-width: 650px){
+    .settings {
+        gap: 60px;
+    }
+
+    .middle-section{
+        flex-flow: wrap;
+    }
+
+    .field-row{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .field{
+        min-width: 0;
+    }
+
+    .account-actions{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .black-button{
+        font-size: 1.5rem;
+        border-radius: 3.5rem;
+        align-self: center;
+    }
+
+    .styledButton{
+        font-size: 1.5rem;
+        border-radius: 3.5rem;
+        align-self: center;
+    }
+
+    #back-button{
+        font-size: 1.5rem;
+        width: 150px;
+        padding: 0.5rem 0.5rem;
+    }
+
+    #custom-input{
+        font-size: 1.75rem;
+    }
+
+    #save-button{
+        font-size: 1.5rem;
+        width: 140px;
+        padding: 0.5rem 0.5rem;
+    }
+
+    #password_button{
+        font-size: 1.5rem;
+        padding: 1rem 2rem;
+    }
+}

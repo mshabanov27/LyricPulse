@@ -1,0 +1,144 @@
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    width: 100%;
+    height: 100%;
+    gap: 40px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+    width: 100%;
+}
+
+.left-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 40px;
+}
+
+.song-info {
+    display: flex;
+    gap: 20px;
+}
+
+.album-cover {
+    height: 150px;
+}
+
+.name {
+    font-size: 40px;
+    font-weight: bold;
+    overflow-wrap: break-word;
+}
+
+.artist {
+    font-size: 30px;
+    overflow-wrap: break-word;
+}
+
+.video-container {
+    border-radius: 30px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+.lyrics-box {
+    display: flex;
+    height: 600px;
+    border: 7px solid black;
+    border-radius: 25px;
+    justify-content: space-between;
+    margin-right: 40px;
+}
+
+.lyrics {
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    margin: 10px;
+    padding: 20px;
+    font-size: 30px;
+    max-width: 700px;
+}
+
+.lyrics::-webkit-scrollbar {
+    width: 30px;
+}
+
+.lyrics::-webkit-scrollbar-track {
+    background: var(--light);
+    border: 4px solid black;
+    border-radius: 50px;
+    margin-block: 10px;
+}
+
+.lyrics::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 100vw;
+    border: 2px solid rgba(0, 0, 0, 0);
+}
+
+.right-margin-scroll {
+    min-width: 10px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .main-content {
+        overflow-y: scroll;
+    }
+
+    .flex-container {
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .left-block {
+        margin: 0;
+        width: 80%;
+        gap: 20px;
+    }
+
+    .video-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .lyrics-box {
+        width: 80%;
+        margin-right: 0;
+    }
+
+    .right-margin-scroll {
+        min-width: 5px;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .name {
+        font-size: 25px;
+    }
+
+    .artist {
+        font-size: 20px;
+    }
+
+    .lyrics {
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .black-button {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    .lyrics::-webkit-scrollbar {
+        width: 20px;
+    }
+}

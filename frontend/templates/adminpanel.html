@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/adminpanel.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('frontend', path='static/favicon.ico') }}">
+</head>
+<body>
+<header class="standardHeader">
+    <div class="logo"><a href="/"
+                         style="color: black; text-decoration: none;">LyricPulse</a>
+    </div>
+    <img src="{{ url_for('frontend', path='static/profile.jpg') }}" alt="Profile Icon" class="profile-icon"
+         onclick="toggleMenu()">
+    <div class="profile-menu" id="profileMenu">
+        <ul>
+            <li><a class="menu-links" href="/profile/">Profile</a></li>
+            <li><a class="menu-links" href="/history/">History</a></li>
+            <li><a class="menu-links" href="mailto:mityashabanov2004@gmail.com">Support</a></li>
+            <li><a class="menu-links" href="#" id="logoutLink">Sign out</a></li>
+        </ul>
+    </div>
+</header>
+<div class="main-section" id="mainSection">
+    <form class="search-bar" id="change_username">
+        <label for="username-search"></label>
+        <input type="text" placeholder="Username" id="username-search" name="username" required>
+
+        <button class="black-button" id="search-button">Search</button>
+    </form>
+
+    <div class="users-section">
+        {{ user_tags|safe }}
+    </div>
+</div>
+
+<dialog>
+    <p style="font-size: 35px; font-weight: bold; padding-bottom: 20px;" id="description"></p>
+    <a class="black-button" onclick="closePopup()">OK</a>
+</dialog>
+
+<script src="{{ url_for('frontend', path='static/common.js') }}"></script>
+<script>
+    document.getElementById("search-button").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const searchQuery = document.getElementById("username-search").value;
+        window.location.href = '/users/' + searchQuery
+    });
+
+    function blockUser(userId) {
+        fetch('/users/' + userId, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                showPopup(data.message);
+                document.getElementById(userId).parentElement.remove();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showPopup("Something went wrong")
+            });
+    }
+
+    function showPopup(message) {
+        document.getElementById("description").innerHTML = message;
+        const dialog = document.querySelector("dialog");
+        document.getElementById("mainSection").classList.add("blur-background");
+        dialog.showModal();
+    }
+
+    function closePopup() {
+        const dialog = document.querySelector("dialog");
+        document.getElementById("mainSection").classList.remove("blur-background");
+        dialog.close();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+@media only screen and (max-width: 500px) {
+    h1{
+        font-size: 8vh;
+        font-weight: normal
+    }
+}
+
+@media only screen and (min-width: 500px) {
+    h1{
+        font-size: 5.5rem;
+        font-weight: normal
+    }
+}
+
+.main-content {
+    margin-top: 100px;
+    text-align: center;
+    max-width: 1400px;
+    min-width: 60%;
+}
+
+@media only screen and (max-width: 850px) {
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 50px;
+        gap: 15px;
+    }
+}
+
+@media only screen and (min-width: 850px) {
+    .action-buttons {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 100px;
+    }
+}
+
+.styledButton{
+    font-size: 6vh;
+    font-weight: normal;
+    border: 8px solid var(--dark);
+    border-radius: 80px;
+    padding: 1.5rem 4rem;
+}
+
+span {
+    font-size: 3.5rem;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/history.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('frontend', path='static/favicon.ico') }}">
+</head>
+<body>
+<header class="standardHeader">
+    <div class="logo"><a href="/"
+                         style="color: black; text-decoration: none;">LyricPulse</a>
+    </div>
+    <img src="{{ url_for('frontend', path='static/profile.jpg') }}" alt="Profile Icon" class="profile-icon"
+         onclick="toggleMenu()">
+    <div class="profile-menu" id="profileMenu">
+        <ul>
+            <li><a class="menu-links" href="/profile/">Profile</a></li>
+            <li><a class="menu-links" href="/history/">History</a></li>
+            <li><a class="menu-links" href="mailto:mityashabanov2004@gmail.com">Support</a></li>
+            <li><a class="menu-links" href="#" id="logoutLink">Sign out</a></li>
+        </ul>
+    </div>
+</header>
+<div class="main-section">
+    <button class="black-button" id="back-button" onclick="history.back()">◀ Back</button>
+
+    <div class="songs-section">
+
+        {{ history_tags|safe }}
+
+    </div>
+</div>
+<script src="{{ url_for('frontend', path='static/common.js') }}"></script>
+</body>
+</html>

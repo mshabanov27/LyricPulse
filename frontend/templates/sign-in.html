@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/sign-in.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('frontend', path='static/favicon.ico') }}">
+</head>
+<body>
+<div class="login-box" id="loginBox">
+    <h1>LyricPulse</h1>
+    <form class="login-form" id="signin">
+        <div class="input-group">
+            <label for="username"></label>
+            <input type="text" placeholder="Username" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="password"></label>
+            <input type="password" placeholder="Password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="styledButton">Sign in</button>
+    </form>
+    <div class="noAccount">
+        No account? <a href="/signUp/">Sign up</a>
+    </div>
+</div>
+
+<dialog>
+    <p style="font-size: 35px; font-weight: bold; padding-bottom: 20px;" id="errorDescription"></p>
+    <a class="black-button" onclick="closePopup()">Try Again</a>
+</dialog>
+
+
+<script src="{{ url_for('frontend', path='static/common.js') }}"></script>
+<script>
+    document.getElementById("signin").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (validateLogin()) {
+            loginUser();
+        }
+    });
+
+    function loginUser() {
+        const formData = new FormData(document.getElementById("signin"));
+
+        fetch('/token/', {
+            method: 'POST',
+            body: formData
+        })
+            .then(handleResponse)
+            .then(() => {
+                window.location.href = '/detection/';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showPopup(error.message);
+            });
+    }
+
+    function handleResponse(response) {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.detail || "An unknown error occurred");
+            });
+        }
+        return response.json();
+    }
+
+    function validateLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        return validateUsername(username) && validatePassword(password);
+    }
+
+    function validateUsername(username) {
+        const regex = /^[A-Za-z0-9._]{4,30}$/;
+        if (!regex.test(username)) {
+            showPopup("Invalid username");
+            return false;
+        }
+        return true;
+    }
+
+    function validatePassword(password) {
+        if (!(/^(?=.*[A-Z])(?=.*\d).{8,16}$/.test(password))) {
+            showPopup("Invalid password");
+            return false;
+        }
+        return true;
+    }
+
+    function showPopup(errorMessage) {
+        document.getElementById("errorDescription").innerHTML = errorMessage;
+        const dialog = document.querySelector("dialog");
+        document.getElementById("loginBox").classList.add("blur-background");
+        dialog.showModal();
+    }
+
+    function closePopup() {
+        const dialog = document.querySelector("dialog");
+        document.getElementById("loginBox").classList.remove("blur-background");
+        dialog.close();
+    }
+</script>
+</body>
+</html>
