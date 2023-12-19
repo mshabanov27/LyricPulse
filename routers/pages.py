@@ -38,8 +38,9 @@ async def get_lyrics(request: Request, trackId: str):
     if trackId != 'NotFound':
         about_track = await request_song_info(trackId)
         response = filer_response(about_track)
-        token = request.cookies['access_token']
-        if token:
+
+        if 'access_token' in request.cookies:
+            token = request.cookies['access_token']
             try:
                 user = await get_current_user(token)
                 if user:
