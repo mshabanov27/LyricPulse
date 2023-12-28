@@ -12,9 +12,9 @@ router = APIRouter()
 @router.get("/history/", tags=["Templates", "History"])
 def get_history(current_user: Annotated[User, Depends(get_current_user)], request: Request):
     query = "SELECT h.song_id, s.* FROM history h LEFT JOIN LATERAL \
-            (SELECT name, artist, album_cover FROM songs s WHERE h.song_id = s.id) s ON TRUE \
-             WHERE user_id = (SELECT id FROM users WHERE username = %s);"
-    cursor.execute(query, (current_user.username,))
+            (SELECT name, artist, album_cover FROM songs s WHERE h.song_id = s.id OFFSET 0) s ON TRUE \
+             WHERE user_id = %s;"
+    cursor.execute(query, (current_user.id,))
     history = cursor.fetchall()
     history.reverse()
     history_tags = ''
@@ -27,7 +27,8 @@ def get_history(current_user: Annotated[User, Depends(get_current_user)], reques
                          alt="{song[1]}" \
                          class="album-cover"> \
                     <div> \
-                        <div style="display: flex; flex-direction: column; gap: 15px; align-self: center; max-width: 600px"> \
+                        <div style=\
+                            "display: flex; flex-direction: column; gap: 15px; align-self: center; max-width: 600px"> \
                             <div class="name">{song[1]}</div> \
                             <div class="artist">{song[2]}</div> \
                         </div> \
