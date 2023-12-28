@@ -1,0 +1,18 @@
+CREATE TABLE users(
+    id SERIAL UNIQUE PRIMARY KEY,
+    username VARCHAR(30) UNIQUE,
+    password VARCHAR(255),
+    is_admin BOOLEAN
+);
+
+CREATE TABLE songs(
+    id INTEGER UNIQUE PRIMARY KEY,
+    name VARCHAR(255),
+    artist VARCHAR(255),
+    album_cover VARCHAR(255)
+);
+
+CREATE TABLE history(
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    song_id INTEGER REFERENCES songs(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
