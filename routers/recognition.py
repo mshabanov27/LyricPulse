@@ -1,6 +1,7 @@
 from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import RedirectResponse
 from shazamio import Shazam
+import shazamio.client
 import shazamio.user_agent
 import json
 from io import BytesIO
