@@ -1,4 +1,4 @@
-from fastapi import HTTPException, Depends, APIRouter, status, Form, Request
+from fastapi import HTTPException, Depends, APIRouter, status, Form
 from fastapi.responses import RedirectResponse
 from typing import Annotated
 from routers.database import cursor, conn

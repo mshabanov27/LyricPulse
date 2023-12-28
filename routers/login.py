@@ -2,7 +2,8 @@ from fastapi import APIRouter, status, HTTPException, Response, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from jose import JWTError, jwt
-from routers.security import oauth2_scheme, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_DAYS, create_access_token, check_password, encrypt_value
+from routers.security import (oauth2_scheme, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_DAYS,
+                              create_access_token, check_password)
 from datetime import timedelta
 from routers.models import User, TokenData
 from routers.database import cursor
