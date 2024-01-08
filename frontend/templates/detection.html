@@ -102,6 +102,10 @@
             alert("File is too big!");
             this.value = "";
         }
+        if(!this.files[0].type.match('audio.*')){
+            alert("Incorrect file format! Only mp3, m4a, ogg.");
+            this.value = "";
+        }
 
         sendAudioToBackend(this.files[0])
     }
