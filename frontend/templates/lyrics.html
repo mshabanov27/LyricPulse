@@ -11,7 +11,7 @@
 <body>
 <header class="standardHeader">
     <div class="logo"><a href="/"
-                         style="color: black; text-decoration: none;">LyricPulse</a>
+                         style="color: var(--dark); text-decoration: none;">LyricPulse</a>
     </div>
     <img src="{{ url_for('frontend', path='static/profile.jpg') }}" alt="Profile Icon" class="profile-icon"
          onclick="toggleMenu()">
@@ -29,7 +29,7 @@
     <div class="flex-container">
         <div class="left-block">
             <div class="song-info">
-                <img src={{album_cover}}
+                <img src="{{ url_for('frontend', path='static/media/album_covers/' ~ album_cover) }}"
                      alt="Album cover"
                      class="album-cover">
                 <div style="display: flex; flex-direction: column; gap: 15px; align-self: center; max-width: 600px">
@@ -46,9 +46,7 @@
         </div>
 
         <div class="lyrics-box">
-            <div class="lyrics">
-                {{ lyrics|safe }}
-            </div>
+            <div class="lyrics" style="white-space: pre-line;">{{ lyrics }}</div>
             <div class="right-margin-scroll"></div>
         </div>
     </div>

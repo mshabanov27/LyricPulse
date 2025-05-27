@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
+    <title>LyricPulse</title>
     <link rel="stylesheet" href="{{ url_for('frontend', path='static/common.css') }}">
-    <link rel="stylesheet" href="{{ url_for('frontend', path='static/history.css') }}">
+    <link rel="stylesheet" href="{{ url_for('frontend', path='static/humming-results.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('frontend', path='static/favicon.ico') }}">
 </head>
 <body>
@@ -24,15 +24,21 @@
         </ul>
     </div>
 </header>
-<div class="main-section">
-    <button class="black-button" id="back-button" onclick="history.back()">◀ Back</button>
 
-    <div class="songs-section">
+<div class="results-box" id="resultsBox">
+    <h1>Best results:</h1>
 
-        {{ history_tags|safe }}
+    <div class="results-section">
+
+        {{ humming_results_tags|safe }}
 
     </div>
+
+    <div class="notFound">
+        Not found? <a href="/hummingDetection/">Try again</a>
+    </div>
 </div>
+
 <script src="{{ url_for('frontend', path='static/common.js') }}"></script>
 </body>
 </html>

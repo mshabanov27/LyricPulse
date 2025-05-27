@@ -1,6 +1,8 @@
 :root {
-  --light: #d9d9d9;
-  --dark: #1c1c1c;
+  --light: #fdfffc;
+  --dark: #251936;
+  --clear-history: #f1d302;
+  --delete-user: #c1292e;
 }
 
 body,
@@ -14,6 +16,7 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: var(--dark);
 }
 
 .styledButton {
@@ -93,7 +96,7 @@ html {
     right: 30px;
     top: 70px;
     color: var(--light);
-    background-color: black;
+    background-color: var(--dark);
     border-radius: 10px;
 }
 
@@ -114,21 +117,21 @@ html {
 }
 
 .menu-links {
-    color: white;
+    color: var(--light);
     text-decoration: none;
 }
 
 .menu-links :visited{
-    color: white;
+    color: var(--light);
     text-decoration: none;
 }
 
 .black-button{
     font-size: 2.25rem;
     border-radius: 40px;
-    color: white;
-    background-color: black;
-    border: 6px solid black;
+    color: var(--light);
+    background-color: var(--dark);
+    border: 6px solid var(--dark);
     padding: 1rem 4rem;
     cursor: pointer;
     transition: 0.35s;
@@ -137,7 +140,7 @@ html {
 }
 
 .black-button:hover{
-    color: black;
+    color: var(--dark);
     background-color: var(--light);
 }
 

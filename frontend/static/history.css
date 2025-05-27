@@ -26,7 +26,7 @@
     display: flex;
     align-self: start;
     gap: 20px;
-    border: 5px solid black;
+    border: 5px solid var(--dark);
     border-radius: 40px;
     padding: 20px 30px;
     width: 90%;
@@ -54,13 +54,13 @@
 
 .songs-section::-webkit-scrollbar-track {
     background: var(--light);
-    border: 4px solid black;
+    border: 4px solid var(--dark);
     border-radius: 50px;
     margin-block: 10px;
 }
 
 .songs-section::-webkit-scrollbar-thumb {
-    background-color: black;
+    background-color: var(--dark);
     border-radius: 100vw;
     border: 2px solid rgba(0, 0, 0, 0);
 }

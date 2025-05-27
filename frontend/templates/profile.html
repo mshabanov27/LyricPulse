@@ -11,7 +11,7 @@
 <body>
 <header class="standardHeader">
     <div class="logo"><a href="/"
-                         style="color: black; text-decoration: none;">LyricPulse</a>
+                         style="color: var(--dark); text-decoration: none;">LyricPulse</a>
     </div>
     <img src="{{ url_for('frontend', path='static/profile.jpg') }}" alt="Profile Icon" class="profile-icon"
          onclick="toggleMenu()">
@@ -35,7 +35,7 @@
                 <div class="field-label">Username:</div>
                 <form class="field" id="change_username">
                     <label for="new_username"></label>
-                    <input type="text" placeholder="New Username" value={{username}} id="new_username"
+                    <input type="text" placeholder="New Username" value={{username}} id="new_username" style="color: var(--dark);"
                            name="new_username" required>
 
                     <button class="black-button" id="save-button">Save</button>
@@ -57,8 +57,8 @@
 
 <dialog id="confirm-dialog">
     <div style="display: flex; flex-direction: column; align-items: center">
-        <p style="font-size: 35px; font-weight: bold; padding-bottom: 20px;" id="confirmation"></p>
-        <div id="confirm_cancel" style="display: flex; gap: 30px">
+        <p style="font-size: 35px; font-weight: bold; padding-bottom: 20px; color: var(--dark);" id="confirmation"></p>
+        <div id="confirm_cancel" class="popup-buttons">
             <button class="black-button">Confirm</button>
             <button class="styledButton" id="cancel" onclick="closePopup()">Cancel</button>
         </div>

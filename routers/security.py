@@ -3,12 +3,14 @@ from jose import jwt
 import bcrypt
 from routers.database import cursor
 from routers.utils import OAuth2PasswordBearerWithCookie
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-SECRET_KEY = "YOUR_SECRET_KEY"
+SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_DAYS = 7
-
 
 oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl="token")
 

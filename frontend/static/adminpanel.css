@@ -12,7 +12,7 @@
 .search-bar {
     display: flex;
     justify-content: space-between;
-    border: 3px solid black;
+    border: 3px solid var(--dark);
     border-radius: 40px;
     width: 95%;
     background-color: var(--light);
@@ -45,7 +45,7 @@
     display: flex;
     justify-content: space-between;
     align-self: start;
-    border: 5px solid black;
+    border: 5px solid var(--dark);
     border-radius: 40px;
     width: 95%;
     box-sizing: border-box;
@@ -71,13 +71,13 @@
 
 .main-section::-webkit-scrollbar-track {
     background: var(--light);
-    border: 4px solid black;
+    border: 4px solid var(--dark);
     border-radius: 50px;
     margin-block: 10px;
 }
 
 .main-section::-webkit-scrollbar-thumb {
-    background-color: black;
+    background-color: var(--dark);
     border-radius: 100vw;
     border: 2px solid rgba(0, 0, 0, 0);
 }

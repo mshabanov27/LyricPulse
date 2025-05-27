@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, Depends, HTTPException
 from typing import Annotated
 from routers.models import User
 from routers.login import get_current_user
-from routers.recognition import request_song_info, filer_response, add_song_to_history, make_empty_response
+from routers.recognition import request_song_info, add_song_to_history, make_empty_response
 from template_conf import templates
 
 
@@ -33,19 +33,23 @@ def get_detection(request: Request):
     return templates.TemplateResponse('detection.html', response)
 
 
+@router.get("/hummingDetection/", tags=["Templates"])
+def get_detection(request: Request):
+    response = {'request': request}
+    return templates.TemplateResponse('humming-detection.html', response)
+
+
 @router.get("/lyrics/{trackId}", tags=["Templates", "Recognition"])
 async def get_lyrics(request: Request, trackId: str):
-    if trackId != 'NotFound':
-        about_track = await request_song_info(trackId)
-        response = filer_response(about_track)
+    if trackId != "NotFound":
+        response = await request_song_info(trackId)
 
         if 'access_token' in request.cookies:
             token = request.cookies['access_token']
             try:
                 user = await get_current_user(token)
                 if user:
-                    add_song_to_history(user.id, trackId,
-                                        response['name'], response['artist'], response['album_cover'])
+                    add_song_to_history(user.id, trackId)
             except HTTPException:
                 pass
     else:
@@ -66,4 +70,3 @@ def get_profile(request: Request, current_user: Annotated[User, Depends(get_curr
 def get_password_change_page(request: Request, current_user: Annotated[User, Depends(get_current_user)]):
     response = {'username': current_user.username, 'request': request}
     return templates.TemplateResponse('password.html', response)
-

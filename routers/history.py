@@ -23,7 +23,7 @@ def get_history(current_user: Annotated[User, Depends(get_current_user)], reques
         for song in history:
             history_tags += \
                 f'<div class="song-info"> \
-                    <img src="{song[3]}"\
+                    <img src="/frontend/static/media/album_covers/{song[3]}"\
                          alt="{song[1]}" \
                          class="album-cover"> \
                     <div> \
@@ -48,12 +48,3 @@ def delete_history(current_user: Annotated[User, Depends(get_current_user)]):
     cursor.execute(query, (current_user.username,))
     conn.commit()
     return RedirectResponse(url="/profile/", status_code=status.HTTP_303_SEE_OTHER)
-
-
-def in_history(song_id):
-    query = "SELECT * FROM songs WHERE id = %s"
-    cursor.execute(query, (song_id,))
-    if cursor.fetchall():
-        return True
-
-    return False

@@ -27,12 +27,12 @@
 <main class="main-content">
     <h1>You can...</h1>
     <div class="action-buttons">
-        <button type="button" class="styledButton" id="recordButton" onclick="toggleRecording()">Record</button>
+        <button type="button" class="styledButton" id="recordButton" onclick="toggleRecording()">Hum a song</button>
         <span style="min-width: 150px;">or</span>
         <input type="file" id="upload" accept=".m4a, .mp3, .wav, .ogg .flac" hidden/>
         <label for="upload" class="styledButton">Upload</label>
     </div>
-    <a href="/hummingDetection/">Or recognize by humming!</a>
+    <a href="/detection/">Or recognize by a song snippet!</a>
 </main>
 <script src="{{ url_for('frontend', path='static/common.js') }}"></script>
 <script>
@@ -82,7 +82,7 @@
 
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '/recognition/';
+        form.action = '/hummingResults/';
         form.enctype = 'multipart/form-data';
 
         const fileInput = document.createElement('input');

@@ -1,0 +1,151 @@
+.results-box {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: var(--light);
+    margin-top: 50px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    align-self: center;
+    margin: 5px;
+}
+
+.results-section {
+    background-color: var(--light);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.result {
+    display: flex;
+    align-self: start;
+    gap: 20px;
+    border: 5px solid var(--dark);
+    border-radius: 40px;
+    padding: 20px 30px;
+    width: 90%;
+    text-decoration: none;
+    transition: 0.2s;
+    color: var(--dark);
+}
+
+.album-cover {
+    height: 130px;
+}
+
+.song-metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-self: center;
+    max-width: 600px;
+}
+
+.name {
+    font-size: 35px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.artist {
+    font-size: 25px;
+    overflow-wrap: break-word;
+}
+
+.result:hover {
+    background-color: var(--dark);
+    color: var(--light);
+    transition: 0.25s;
+}
+
+
+.notFound a {
+    color: var(--dark);
+    text-decoration: underline;
+}
+
+.notFound a :visited {
+   color: var(--dark);
+   text-decoration: none;
+}
+
+.notFound {
+    font-size: 1.5rem;
+    text-shadow: -0.5px 0 var(--dark);
+    text-align: center;
+}
+
+
+@media only screen and (max-width: 1100px) {
+    .results-section {
+        align-items: flex-start;
+        overflow-x: hidden;
+        width: initial;
+        margin-right: 10px;
+    }
+
+    .album-cover {
+        height: 125px;
+    }
+
+    .name {
+        font-size: 30px;
+        max-width: 550px;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .result {
+        width: 600px;
+        margin: 0;
+        padding: 15px;
+        gap: 10px
+    }
+
+    .album-cover {
+        height: 90px;
+    }
+
+    .song-metadata {
+        gap: 10px;
+        max-width: 500px;
+    }
+
+    .name {
+        font-size: 20px;
+    }
+
+    .artist {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .result {
+        width: 400px;
+    }
+
+    .song-metadata {
+        gap: 10px;
+        max-width: 300px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .result {
+        width: 320px;
+    }
+
+    .song-metadata {
+        gap: 10px;
+        max-width: 220px;
+    }
+}

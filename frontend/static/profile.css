@@ -1,3 +1,8 @@
+.popup-buttons {
+    display: flex;
+    gap: 30px;
+}
+
 .settings {
     display: flex;
     flex-direction: column;
@@ -56,8 +61,12 @@
     margin-bottom: 50px;
 }
 
+.black-button{
+        font-size: 35px;
+}
+
 #back-button{
-    font-size: 1.5rem;
+    font-size: 35px;
     align-self: flex-start;
 }
 
@@ -71,21 +80,21 @@
 }
 
 #save-button{
-    font-size: 1.5rem;
+    font-size: 30px;
     padding: 0.5rem 1.5rem;
 }
 
 #password_button{
-    font-size: 2rem;
+    font-size: 35px;
     padding: 1rem 2rem;
 }
 
 #clear-button:hover{
-    background-color: #FF5F15;
+    background-color: var(--clear-history);
 }
 
 #delete-button:hover{
-    background-color: #C41E3A;
+    background-color: var(--delete-user);
 }
 
 .styledButton{
@@ -99,8 +108,8 @@
 }
 
 #confirm_clear{
-    color: black;
-    background-color: #FF5F15;
+    color: var(--dark);
+    background-color: var(--clear-history);
 }
 
 #confirm_clear:hover{
@@ -109,8 +118,8 @@
 }
 
 #confirm_delete{
-    color: black;
-    background-color: #C41E3A;
+    color: var(--dark);
+    background-color: var(--delete-user);
 }
 
 #confirm_delete:hover{
@@ -122,9 +131,10 @@ input:focus {
     outline:none;
 }
 
-@media only screen and (max-width: 920px){
+@media only screen and (max-width: 950px){
     .middle-section{
         flex-flow: wrap;
+        margin: 40px 30px;
     }
 
     .fields-section {
@@ -145,12 +155,18 @@ input:focus {
 }
 
 @media only screen and (max-width: 650px){
+    .popup-buttons {
+        flex-direction: column;
+        max-height: 200px;
+    }
+
     .settings {
         gap: 60px;
     }
 
     .middle-section{
         flex-flow: wrap;
+        margin: 20px 20px;
     }
 
     .field-row{
@@ -169,35 +185,31 @@ input:focus {
     }
 
     .black-button{
-        font-size: 1.5rem;
-        border-radius: 3.5rem;
+        font-size: 25px;
         align-self: center;
     }
 
     .styledButton{
-        font-size: 1.5rem;
+        font-size: 25px;
         border-radius: 3.5rem;
         align-self: center;
     }
 
     #back-button{
-        font-size: 1.5rem;
+        font-size: 20px;
         width: 150px;
-        padding: 0.5rem 0.5rem;
-    }
-
-    #custom-input{
-        font-size: 1.75rem;
+        padding: 5px;
+        text-align: center;
     }
 
     #save-button{
-        font-size: 1.5rem;
+        font-size: 25px;
         width: 140px;
         padding: 0.5rem 0.5rem;
     }
 
     #password_button{
-        font-size: 1.5rem;
+        font-size: 25px;
         padding: 1rem 2rem;
     }
 }

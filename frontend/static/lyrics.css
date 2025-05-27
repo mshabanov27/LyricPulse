@@ -28,7 +28,7 @@
 }
 
 .album-cover {
-    height: 150px;
+    height: 175px;
 }
 
 .name {
@@ -38,7 +38,7 @@
 }
 
 .artist {
-    font-size: 30px;
+    font-size: 35px;
     overflow-wrap: break-word;
 }
 
@@ -51,7 +51,7 @@
 .lyrics-box {
     display: flex;
     height: 600px;
-    border: 7px solid black;
+    border: 7px solid var(--dark);
     border-radius: 25px;
     justify-content: space-between;
     margin-right: 40px;
@@ -72,13 +72,13 @@
 
 .lyrics::-webkit-scrollbar-track {
     background: var(--light);
-    border: 4px solid black;
+    border: 4px solid var(--dark);
     border-radius: 50px;
     margin-block: 10px;
 }
 
 .lyrics::-webkit-scrollbar-thumb {
-    background-color: black;
+    background-color: var(--dark);
     border-radius: 100vw;
     border: 2px solid rgba(0, 0, 0, 0);
 }
